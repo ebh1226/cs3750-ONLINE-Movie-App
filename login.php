@@ -1,31 +1,46 @@
-<?php
+<?php 
 require("connect-db.php");
+require("login-handler.php");
+?>
 
-require("movie-db.php");
-$list_of_times = getAllTimes();
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-{
-   if (!empty($_POST['addBtn2']))
-   {
-      addTime($_POST['profileID'], $_POST['StartTime'], $_POST['EndTime']);
-      $list_of_times = getAllTimes();  
-   }
+<?php
+
+
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" && strlen($_POST['username']) > 0 && !empty($_POST['pwd'])) {
+    $user = trim($_POST['username']);
+    if (!ctype_alnum($user))
+        echo "Invalid";
+    if (isset($_POST['pwd'])) {
+        $pwd = trim($_POST['pwd']);
+        $results = getAccountInfo($_POST['username']);
+        if (!empty($results)) {
+            if (password_verify($pwd, $results[1])) {
+                setcookie('user', $_POST['username'], time() + 3600);
+                header('Location: homepage.php');
+            } else {
+                echo '<script>window.alert("Username and password do not match our record!")</script>';
+            }
+        } else {
+            echo '<script>window.alert("Username does not exist!")</script>';
+        }
+    }
 }
 ?>
 
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">  
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="your name">
-  <meta name="description" content="include some description about your page">  
-  <title>Movie App</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="icon" type="image/png" href="http://www.cs.virginia.edu/~up3f/cs4750/images/db-icon.png" />
-  <style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Caroline Bell, Ellen Herrera, Esha Nama">
+    <meta name="description" content="Movie App Login Page">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Movie App Log In</title>
+   
+    <style>
       /* Global styles */
       body {
           font-family: 'Helvetica Rounded', 'Arial Rounded MT Bold', sans-serif;
@@ -157,13 +172,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         }
     </style>
 
+
 </head>
+
 <body>
-<?php
-if (isset($_COOKIE['user']))
-{ 
-?> 
-<nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <nav>
       <ul>
           <li><a href="homepage.php">Home</a></li>
           <li><a href="addMovieForm.php">Add A Movie</a></li>
@@ -179,66 +194,18 @@ if (isset($_COOKIE['user']))
             <?php } ?>
       </ul>
   </nav>
-<div class="container">
-  <h1>Add Time</h1>  
 
-  <form name="SecondForm" action="addTimeStamp.php" method="post">  
-  <div class="row">
-    <div class="col">
-    Your profile ID:
-    <input type="number" class="form-control" name="profileID" required />   
-      </div>     
-  </div>  
-  <div class="row">
-  <div class="col">
-    Start Time:
-    <input type="text" class="form-control" name="StartTime" required />        
-      </div>
-  </div>  
-  <div class="row">
-    <div class="col">
-    End Time:
-    <input type="text" class="form-control" name="EndTime" required />   
-      </div>     
-  </div>  
-      </div>
-  <div clss="container">
-  <div class="row mb-5 mx-5">
-        <input type="submit" value="Add Times" name="addBtn2" 
-                class="btn btn-primary btn-lg btn-block" title="Insert a time into a timestamp table" />
-      
-      </div>
-      </div>
-  
-</form>   
-
-
-<h2>List of Time Stamps</h2>
-<div class="row justify-content-center">  
-<table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
-  <thead>
-  <tr style="background-color:#B0B0B0">
-    <th width="30%">Profile ID        
-    <th width="30%">StartTime  
-    <th width="30%">EndTime  
-  </tr>
-  </thead>
-<?php foreach ($list_of_times as $each_time): ?>
-  <tr>
-     <td><?php echo $each_time['profileID']; ?></td>
-     <td><?php echo $each_time['StartTime']; ?></td>  
-     <td><?php echo $each_time['EndTime']; ?></td>             
-  </tr>
-<?php endforeach; ?>
-</table>
-</div>   
-<?php
-}
-else 
-   header('Location: login.php');    // force login
-?>
+    <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
+    <div class="container">
+    <h1>Movie App Login</h1>
+    <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
+      Username: <input type="text" name="username" class="form-control" autofocus required /> <br/>
+      Password: <input type="password" name="pwd" class="form-control" required /> <br/>
+      <input type="submit" value="Log In" class="btn btn-light"  />   
+    </form>
+    <h4>Don't have an account? Sign up <a href="signup.php">here!</a></h4>
+  </div>
+    </form>
 </body>
 
-</div>    
-</body>
 </html>
