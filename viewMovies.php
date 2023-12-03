@@ -164,6 +164,14 @@ $list_of_movies= getJUSTmovies();
           <li><a href="addMovieForm.php">Add A Movie</a></li>
           <li><a href="viewMovies.php">View All Movies</a></li>
           <li><a href="addTimeStamp.php">Add A Time Stamp</a></li>
+          <?php
+          if (isset($_COOKIE['user']))
+          { ?> 
+          <li><a href="logout.php">Log Out</a></li>
+          <?php
+          } else { ?>
+        <li><a href="login.php">Log In</a><li>
+            <?php } ?>
       </ul>
   </nav>
 

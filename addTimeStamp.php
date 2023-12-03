@@ -159,12 +159,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 </head>
 <body>
+<?php
+if (isset($_COOKIE['user']))
+{ 
+?> 
 <nav>
       <ul>
           <li><a href="homepage.php">Home</a></li>
           <li><a href="addMovieForm.php">Add A Movie</a></li>
           <li><a href="viewMovies.php">View All Movies</a></li>
           <li><a href="addTimeStamp.php">Add A Time Stamp</a></li>
+          <?php
+          if (isset($_COOKIE['user']))
+          { ?> 
+          <li><a href="logout.php">Log Out</a></li>
+          <?php
+          } else { ?>
+        <li><a href="login.php">Log In</a><li>
+            <?php } ?>
       </ul>
   </nav>
 <div class="container">
@@ -220,7 +232,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <?php endforeach; ?>
 </table>
 </div>   
-
+<?php
+}
+else 
+   header('Location: login.php');    // force login
+?>
 </body>
 
 </div>    
