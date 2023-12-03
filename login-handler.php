@@ -11,10 +11,10 @@ function getAccountInfo($account_user)
     return $results;
 }
 
-function createAccount($username, $password, $hashed_password)
+function createAccount($username, $hashed_password)
 {
    global $db;
-   $query = "INSERT INTO `UsersLogin` (`Username`, `Password`, `ProfileType`, `HashedPassword`) VALUES ('$username', '$password', 'Base', '$hashed_password')";
+   $query = "INSERT INTO `UsersLogin` (`Username`, `Password`, `ProfileType`) VALUES ('$username', '$hashed_password', 'Base')";
    $statement = $db->prepare($query);
    $statement->execute();
    $results = $statement->fetch();
