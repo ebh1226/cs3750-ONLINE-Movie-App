@@ -110,4 +110,66 @@ function viewUserInfo(){
   $statement->closeCursor();
   return $results;
 }
+
+function sortMoviesAlphabetically(){
+  global $db;
+  $query="select * from Movies ORDER BY movie_title ASC;";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $results = $statement->fetchAll();
+  $statement->closeCursor();
+  return $results;
+}
+
+function sortMoviesByRating(){
+  global $db;
+  $query="select * from Movies ORDER BY five_star_rating DESC;";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $results = $statement->fetchAll();
+  $statement->closeCursor();
+  return $results;
+}
+
+function sortMoviesByLegalRating(){
+  global $db;
+  $query="select * from Movies ORDER BY LegalRating ASC;";
+ $statement = $db->prepare($query);
+  $statement->execute();
+  $results = $statement->fetchAll();
+  $statement->closeCursor();
+  return $results;
+}
+
+function sortMoviesByRunTime(){
+  global $db;
+  $query="select * from Movies ORDER BY TotalRunTime ASC;";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $results = $statement->fetchAll();
+  $statement->closeCursor();
+  return $results;
+}
+
+function sortMoviesByReleaseDate(){
+  global $db;
+  $query="select * from Movies ORDER BY ReleaseDate DESC;";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $results = $statement->fetchAll();
+  $statement->closeCursor();
+  return $results;
+}
+
+function deleteMovie($name)
+{
+  global $db;
+  $query = "DELETE FROM add_movie WHERE movieTitle=:name";
+
+  $statement = $db->prepare($query); 
+  $statement->bindValue(':name', $name);
+  $statement->execute();
+  $statement->closeCursor();
+}
+
 ?>
