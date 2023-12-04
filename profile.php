@@ -5,12 +5,18 @@ require("login-handler.php");
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if(!empty($_POST['updateBtn'])) {
         $user = $_COOKIE['user'];
         $pwd = trim($_POST['pwd']);
         $hash_pwd = password_hash($pwd, PASSWORD_BCRYPT);
         updatePassword($user, $hash_pwd);
         echo 'Password change successful!';
+    } else if (!empty($_POST['deleteBtn'])) {
+        $user = $_COOKIE['user'];
+        deleteAccount($user);
+        header('Location: logout.php'); 
     }
+}
 ?>
 
 <!DOCTYPE html>
@@ -188,8 +194,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
       Username: <input type="text" name="username" class="form-control" value="<?php echo $_COOKIE['user']; ?>" disabled /> <br/>
       Profile Type: <input type="text" name="profileType" class="form-control" value="<?php $type = getProfileType($_COOKIE['user']); echo $type[0] ?>" disabled /> <br/>
-      Password: <input type="password" name="pwd" class="form-control" required /> <br/>
-      <input type="submit" value="Update Password" class="btn btn-light"  />   
+      Password: <input type="password" name="pwd" class="form-control"/> <br/>
+      <input type="submit" value="Update Password" name="updateBtn" class="btn btn-light"  />  
+      <input type="submit" value="Delete Account" name="deleteBtn" class="btn btn-danger"  />  
     </form>
   </div>
     </form>

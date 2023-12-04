@@ -70,6 +70,15 @@ function updatePassword($user, $pwd)
    $statement->closeCursor();
 }
 
+function deleteAccount($user)
+{
+   global $db;
+   $query = "DELETE FROM UsersLogin WHERE Username = '$user'";
+   $statement = $db->prepare($query);
+   $statement->execute();
+   $statement->closeCursor();
+}
+
 $name = $password = NULL;
 $name_msg = $pwd_msg = NULL;
 
