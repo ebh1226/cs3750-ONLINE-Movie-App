@@ -187,6 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && strlen($_POST['username']) > 0 && !e
           <?php
           if (isset($_COOKIE['user']))
           { ?> 
+          <li><a href="profile.php">Profile</a></li> 
           <li><a href="logout.php">Log Out</a></li>
           <?php
           } else { ?>

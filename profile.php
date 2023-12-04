@@ -1,15 +1,30 @@
-<!doctype html>
+<?php 
+require("connect-db.php");
+require("login-handler.php");
+?>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+        $user = $_COOKIE['user'];
+        $pwd = trim($_POST['pwd']);
+        $hash_pwd = password_hash($pwd, PASSWORD_BCRYPT);
+        updatePassword($user, $hash_pwd);
+        echo 'Password change successful!';
+    }
+?>
+
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Caroline Bell, Ellen Herrera, Esha Nama">
+    <meta name="description" content="Movie App Sign Up Page">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <title>Movie App: Index</title>
-
+    <title>Movie App Profile</title>
+   
     <style>
       /* Global styles */
       body {
@@ -143,8 +158,12 @@
     </style>
 
 
-  </head>
-  <body>
+</head>
+
+<body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
     <nav>
       <ul>
           <li><a href="homepage.php">Home</a></li>
@@ -153,7 +172,7 @@
           <li><a href="addTimeStamp.php">Add A Time Stamp</a></li>
           <?php
           if (isset($_COOKIE['user']))
-          { ?> 
+          { ?>
           <li><a href="profile.php">Profile</a></li> 
           <li><a href="logout.php">Log Out</a></li>
           <?php
@@ -163,24 +182,17 @@
       </ul>
   </nav>
 
-  <div class="container-fluid border">
-    <h1>Movie App: Home Page</h1>
-    <div style="text-align: center;">
-        <img src="https://akns-images.eonline.com/eol_images/Entire_Site/2023425/rs_1024x759-230525111639-1024.margot-robbie-ryan-gosling-barbie-movie.jpg?fit=around%7C776:576&output-quality=90&crop=776:576;center,top" alt="BarbieImg" class="center">
-    </div>
-    <div style="text-align: center;">
-        <img src="https://akns-images.eonline.com/eol_images/Entire_Site/2023912/rs_634x834-231012031450-beyonce-taylor-swift-2.jpg?fit=around%7C776:1021&output-quality=90&crop=776:1021;center,top" alt="ErasTour" class="center">
-    </div>
-    <!-- Optional JavaScript; choose one of the two! -->
+    <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
+    <div class="container">
+    <h1><?php echo $_COOKIE['user']; ?>'s Profile</h1>
+    <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
+      Username: <input type="text" name="username" class="form-control" value="<?php echo $_COOKIE['user']; ?>" disabled /> <br/>
+      Profile Type: <input type="text" name="profileType" class="form-control" value="<?php $type = getProfileType($_COOKIE['user']); echo $type[0] ?>" disabled /> <br/>
+      Password: <input type="password" name="pwd" class="form-control" required /> <br/>
+      <input type="submit" value="Update Password" class="btn btn-light"  />   
+    </form>
+  </div>
+    </form>
+</body>
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-    -->
-    </div>
-  </body>
 </html>

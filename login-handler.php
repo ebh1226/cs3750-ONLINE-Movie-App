@@ -17,7 +17,22 @@ function createAccount($username, $hashed_password)
    $query = "INSERT INTO `UsersLogin` (`Username`, `Password`, `ProfileType`) VALUES ('$username', '$hashed_password', 'Base')";
    $statement = $db->prepare($query);
    $statement->execute();
-   $results = $statement->fetch();
+   $statement->closeCursor();
+}
+
+function createProfile($username, $hashed_password)
+{
+   global $db;  
+
+   // $count = "SELECT COUNT(*) FROM Users";
+   // $statement = $db->prepare($count);
+   // $statement->execute();
+   // $profileID = $count[0] + 1;
+   // $profileID = '2345';
+
+   $query = "INSERT INTO `Users` (`profileID`, `Username`, `Password`, `ProfileType`) VALUES ('234545', '$username', '$hashed_password', 'Base')";
+   $statement = $db->prepare($query);
+   $statement->execute();
    $statement->closeCursor();
 }
 
@@ -30,6 +45,29 @@ function getUsername($account_user)
     $results = $statement->fetch();
     $statement->closeCursor();
     return $results;
+}
+
+function getProfileType($account_user)
+{
+    global $db;
+    $query = "SELECT ProfileType from UsersLogin where Username = '$account_user'";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $results = $statement->fetch();
+    $statement->closeCursor();
+    return $results;
+}
+
+function updatePassword($user, $pwd)
+{
+   global $db;
+   // $query = "UPDATE `UsersLogin` SET `Password`=:pwd WHERE Username=:user";
+   $query = "UPDATE UsersLogin SET Password='$pwd' WHERE Username='$user'";
+   $statement = $db->prepare($query); 
+   // $statement->bindValue(':pwd', $pwd);
+   // $statement->bindValue(':user', $user);
+   $statement->execute();
+   $statement->closeCursor();
 }
 
 $name = $password = NULL;
