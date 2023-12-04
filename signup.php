@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && strlen($_POST['username']) > 0 && !e
         createAccount($user, $hash_pwd);
         setcookie('user', $_POST['username'], time() + 3600);
         header('Location: homepage.php');
+        exit;
     }
 }
 ?>

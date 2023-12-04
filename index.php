@@ -15,6 +15,15 @@ switch (@parse_url($_SERVER['REQUEST_URI'])['path']) {
     case '/addTimeStamp.php':
       require 'addTimeStamp.php';
       break;
+   case '/login.php':
+      require 'login.php';
+      break;
+   case '/signup.php':
+      require 'signup.php';
+      break;
+   case '/logout.php':
+      require 'logout.php';
+      break;
    default:
       http_response_code(404);
       exit('Not Found');

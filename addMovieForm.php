@@ -160,10 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 </head>
 <body>
-<?php
-if (isset($_COOKIE['user']))
-{ 
-?>   
+
 <nav>
       <ul>
           <li><a href="homepage.php">Home</a></li>
@@ -180,6 +177,10 @@ if (isset($_COOKIE['user']))
             <?php } ?>
       </ul>
   </nav>
+  <?php
+if (isset($_COOKIE['user']))
+{ 
+?> 
 <div class="container">
   <h1>Movie App</h1>  
 
@@ -229,8 +230,9 @@ if (isset($_COOKIE['user']))
 </div>   
 <?php
 }
-else 
-   header('Location: login.php');    // force login
+else
+    echo '<script>window.alert("Need to login to view this page.")</script>';
+   //header('Location: login.php');    // force login
 ?>
 </body>
 

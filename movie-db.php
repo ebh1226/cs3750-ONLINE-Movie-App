@@ -110,4 +110,55 @@ function viewUserInfo(){
   $statement->closeCursor();
   return $results;
 }
+
+function sortMoviesAlphabetically(){
+  global $db;
+  $query="select * from Movies ORDER BY movie_title ASC;";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $results = $statement->fetchAll();
+  $statement->closeCursor();
+  return $results;
+}
+
+function sortMoviesByRating(){
+  global $db;
+  $query="select * from Movies ORDER BY five_star_rating DESC;";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $results = $statement->fetchAll();
+  $statement->closeCursor();
+  return $results;
+}
+
+function sortMoviesByLegalRating(){
+  global $db;
+  $query="select * from Movies ORDER BY `Movies.Legal Rating` ASC;";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $results = $statement->fetchAll();
+  $statement->closeCursor();
+  return $results;
+}
+
+function sortMoviesByRunTime(){
+  global $db;
+  $query="select * from Movies ORDER BY `Movies.Total Run Time` ASC;";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $results = $statement->fetchAll();
+  $statement->closeCursor();
+  return $results;
+}
+
+function sortMoviesByReleaseDate(){
+  global $db;
+  $query="select * from Movies ORDER BY `Movies.Release Date` DESC;";
+  $statement = $db->prepare($query);
+  $statement->execute();
+  $results = $statement->fetchAll();
+  $statement->closeCursor();
+  return $results;
+}
+
 ?>

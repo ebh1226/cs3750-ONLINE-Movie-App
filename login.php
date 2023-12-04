@@ -15,9 +15,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && strlen($_POST['username']) > 0 && !e
         $pwd = trim($_POST['pwd']);
         $results = getAccountInfo($_POST['username']);
         if (!empty($results)) {
-            if (password_verify($pwd, $results[1])) {
+            if ($pwd.equals($results[1]) == true) {
+                //if (password_verify($pwd, $results[1]) == true) {
+                
+                echo '<script>window.alert("Success!")</script>';
                 setcookie('user', $_POST['username'], time() + 3600);
-                header('Location: homepage.php');
+                //window.location.assign("https://cs4750-movieapp.uk.r.appspot.com/");
+                //header('Location: homepage.php');
+                //exit();
             } else {
                 echo '<script>window.alert("Username and password do not match our record!")</script>';
             }

@@ -4,7 +4,29 @@ require("movie-db.php");
 
 $list_of_movies= getJUSTmovies();
 
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+   if (!empty($_POST['sortAlphabetically']))
+   {
+      $list_of_movies = sortMoviesAlphabetically();  
+   }
+    if (!empty($_POST['sortMoviesByReleaseDate']))
+   {
+      $list_of_movies = sortMoviesByReleaseDate();  
+   }
+    if (!empty($_POST['sortMoviesByRunTime']))
+   {
+      $list_of_movies = sortMoviesByRunTime();  
+   }
+    if (!empty($_POST['sortMoviesByLegalRating']))
+   {
+      $list_of_movies = sortMoviesByLegalRating();  
+   }
+    if (!empty($_POST['sortMoviesByRating']))
+   {
+      $list_of_movies = sortMoviesByRating();  
+   }
+}
 ?>
 
 
@@ -177,6 +199,25 @@ $list_of_movies= getJUSTmovies();
 
 <h2>List of movies</h2>
 <div class="row justify-content-center">  
+<div clss="container">
+  <div class="row mb-5 mx-5">
+        <input type="submit" value="Sort Alphabetically" name="sortAlphabetically" 
+                class="btn btn-primary btn-lg btn-block" title="Sort Alphabetically?" />
+
+        <input type="submit" value="Sort By Rating" name="sortMoviesByRating" 
+                class="btn btn-primary btn-lg btn-block" title="Sort By Rating?" />
+
+        <input type="submit" value="Sort By Legal Rating" name="sortMoviesByLegalRating" 
+                class="btn btn-primary btn-lg btn-block" title="Sort By Legal Rating?" />
+
+        <input type="submit" value="Sort By Run Time" name="sortMoviesByRunTime" 
+                class="btn btn-primary btn-lg btn-block" title="Sort By Run Time?" />
+
+        <input type="submit" value="Sort By Release Date" name="sortMoviesByReleaseDate" 
+                class="btn btn-primary btn-lg btn-block" title="Sort By Release Date?" />
+
+      </div>
+      </div>
 <table class="w3-table w3-bordered w3-card-4 center" style="width:70%">
   <thead>
   <tr style="background-color:#B0B0B0">

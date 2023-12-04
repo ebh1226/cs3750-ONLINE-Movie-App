@@ -3,7 +3,7 @@
 function getAccountInfo($account_user)
 {
     global $db;
-    $query = "SELECT * from UsersLogin where Username = '$account_user'";
+    $query = "SELECT Password from UsersLogin where Username = '$account_user'";
     $statement = $db->prepare($query);
     $statement->execute();
     $results = $statement->fetch();
