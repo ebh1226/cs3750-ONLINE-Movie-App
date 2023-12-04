@@ -123,7 +123,7 @@ function sortMoviesAlphabetically(){
 
 function sortMoviesByRating(){
   global $db;
-  $query="select * from Movies ORDER BY five_star_rating DESC;";
+  $query="select * from Movies ORDER BY five_star_rating ASC;";
   $statement = $db->prepare($query);
   $statement->execute();
   $results = $statement->fetchAll();
