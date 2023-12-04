@@ -133,12 +133,22 @@ function sortMoviesByRating(){
 
 function sortMoviesByLegalRating(){
   global $db;
-  $query="select * from Movies ORDER BY `Movies.Legal Rating` ASC;";
-  $statement = $db->prepare($query);
-  $statement->execute();
-  $results = $statement->fetchAll();
-  $statement->closeCursor();
-  return $results;
+  $sql="select * from Movies ORDER BY `Movies.Legal Rating` ASC;";
+    $results = $db->query($sql);
+
+if ($result->num_rows > 0) {
+  // output data of each row
+  while($row = $result->fetch_assoc()) {
+    echo "Movie: " . $row["movie_title"]. " - Legal Rating: " . $row["legal_rating"]. " " . $row["release_date"]. "<br>";
+  }
+} else {
+  echo "0 results";
+}
+  //$statement = $db->prepare($query);
+  //$statement->execute();
+  //$results = $statement->fetchAll();
+  //$statement->closeCursor();
+  //return $results;
 }
 
 function sortMoviesByRunTime(){
